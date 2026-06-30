@@ -1,42 +1,89 @@
-# 2D/3D WebGIS 综合应用 (ALLwebGIS)
+# 🌍 ALLwebGIS: 2D & 3D WebGIS 综合应用平台
 
-这是一个集成了二维地图 (基于 OpenLayers) 与三维地球 (基于 Cesium) 的综合性 WebGIS 应用平台。
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Vite](https://img.shields.io/badge/Vite-8.0-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
+[![OpenLayers](https://img.shields.io/badge/OpenLayers-10.9-1F6B75?logo=openlayers&logoColor=white)](https://openlayers.org/)
+[![Cesium](https://img.shields.io/badge/Cesium-1.141-6BEF7E?logo=cesium&logoColor=white)](https://cesium.com/)
 
-## 核心功能与组件说明
+[🇨🇳 中文版 (Chinese)](./README_zh.md) | [🇬🇧 English (English)](./README_en.md)
 
-### 1. 二维地图功能 (OpenLayers)
-基于 OpenLayers 实现了高性能的二维地图渲染及空间分析工具。
-- **多源底图切换**: 支持在 OpenStreetMap、高德 (矢量/影像)、天地图 (矢量/影像) 以及百度地图之间无缝切换。特别包含了 OpenLayers 视图与百度 WebGL 地图的同步联动机制。
-- **地图控件**: 集成了鼠标坐标拾取 (`MousePosition`) 与鹰眼缩略图 (`OverviewMap`) 控件。
-- **绘制与量算**: 提供原生的交互工具用于绘制折线 (测量距离) 与多边形 (测量面积)。
-- **自定义标注**: 用户可在地图上任意位置点击并输入文本，生成带有样式的自定义注记。
-- **无人机飞行模拟**: 能够基于用户绘制的路线，通过插值动画模拟无人机沿线飞行的过程。
-- **POI 搜索**: 接入了高德 Web 服务 API，实现兴趣点的搜索定位及打点显示。
+这是一个现代化、高性能的 WebGIS 综合应用平台。基于 **Vite** 构建，将 **OpenLayers** (二维空间渲染与分析) 与 **Cesium** (三维数字地球) 无缝整合在同一个前端项目中，展示了卓越的空间数据处理、可视化渲染与多维度地图交互能力。
 
-### 2. 三维地球功能 (Cesium)
-利用 Cesium 构建了逼真的三维数字地球体验。
-- **三维底图**: 支持切换 Bing 地图、OSM、天地图、高德地图、Mapbox 影像及单张静态图片叠加。
-- **真实地形**: 支持加载量化网格 (quantized-mesh) 的本地或在线地形数据，呈现三维地貌起伏。
-- **3D Tiles 数据加载**: 能够流畅加载大规模的三维模型，包括倾斜摄影模型 (如武汉大学校区数据) 和建筑白膜数据。
-- **三维实体与交互**: 支持在三维场景中放置动态的图文标签 (LOGO) 以及基于路径的车辆漫游模拟动画。
+---
 
-### 3. 数据接入与服务集成
-- **本地空间数据**: 支持直接解析和加载 GeoJSON 和 KML 格式的数据文件。
-- **GeoServer OGC 服务**: 无缝对接 GeoServer 发布的服务，包括 WMS、WMTS 影像瓦片和 WFS 矢量要素服务。
-- **Python 后端交互**: 结合 Python FastAPI 后端，实现自定义的 WFS 接口数据拉取。
-- **瓦片数据加载**: 支持加载矢量瓦片 (MVT) 以及本地切割的栅格瓦片 (XYZ 格式)。
+## ✨ 核心功能与亮点
 
-## 安装与运行
+### 🗺️ 二维地图引擎 (OpenLayers)
+- **多源底图秒级切换**: 支持无缝切换 OpenStreetMap、高德 (矢量/卫星)、天地图 (矢量/卫星) 以及百度地图。
+- **2D-3D & WebGL 视图联动**: 实现了 OpenLayers 核心视图与百度 WebGL 地图的相机参数同步与联动逻辑。
+- **原生空间交互**: 
+  - 📏 量算工具: 内置原生折线绘制 (测距) 与多边形绘制 (测面) 功能。
+  - 📝 自定义标注: 用户在地图上点击即可生成带有气泡样式的自定义文本注记。
+- **高级路线动画**: 支持在用户绘制的线段上，通过坐标系插值算法模拟无人机沿线飞行效果。
+- **高德 POI 智能搜索**: 接入高德 Web 服务 API，实现地名搜索、坐标解析及地图精准定位飞入。
 
-1. **安装依赖环境**:
+### 🌐 三维数字地球 (Cesium)
+- **丰富的 3D 基础底图**: 可视化叠加 Bing 地图、OSM、天地图、高德、Mapbox 以及单张图片作为基础地表。
+- **高精度真实地形**: 支持加载量化网格 (quantized-mesh) 地形数据，真实还原地貌起伏与海拔变化。
+- **海量 3D 模型渲染**: 
+  - 🏙️ **3D Tiles**: 流畅加载城市级别的宏大场景，例如武汉大学倾斜摄影实景三维模型，以及基于矢量拉伸的建筑白膜数据。
+- **三维实体与漫游**: 在三维空间内放置交互式标签 (如定制化 LOGO 点位)，并在真实地形上执行基于插值路径的车辆行驶漫游动画。
+
+### 🛰️ 空间数据接入与后端服务
+- **纯前端数据解析**: 原生支持 `.geojson` 与 `.kml` 文件的解析、渲染以及相机自适应。
+- **OGC 标准服务对接**: 与 **GeoServer** 深度集成，标准接入 WMS、WMTS (影像瓦片) 以及 WFS (矢量要素) 协议。
+- **自定义 Python 后端**: 与基于 FastAPI 驱动的自研 Python 后端通信，动态拉取定制化的 WFS 矢量特征。
+- **前沿瓦片技术**:
+  - 📦 **MVT (Mapbox Vector Tiles)**: 高效加载与自定义渲染前端矢量切片。
+  - 🖼️ **XYZ 栅格瓦片**: 规范化加载基于本地切图工具生成的 XYZ 标准瓦片树。
+
+---
+
+## 🛠️ 技术栈
+- **前端工程化**: Vite
+- **二维 GIS**: OpenLayers
+- **三维 GIS**: CesiumJS (基于 `vite-plugin-cesium` 插件)
+- **后端服务生态**: GeoServer (发布 OGC 服务), Python FastAPI (自定义微服务)
+- **第三方 API**: 高德开放平台、天地图开放平台、百度地图开放平台
+
+---
+
+## 🚀 快速启动
+
+### 环境要求
+- [Node.js](https://nodejs.org/) (建议 v16 及以上)
+- 运行中的 GeoServer (如需测试 OGC 服务功能)
+- 运行中的 Python 后端服务 (如需测试自定义 WFS 功能)
+
+### 安装与运行
+1. **克隆代码库:**
+   ```bash
+   git clone https://github.com/ilucky666/ALLwebGIS.git
+   cd ALLwebGIS
+   ```
+
+2. **安装依赖:**
    ```bash
    npm install
    ```
-2. **启动本地开发服务**:
+
+3. **启动开发服务器:**
    ```bash
    npm run dev
    ```
-   *注意：要使用完整的服务集成功能，请确保您的 Python 后端服务以及 GeoServer 已正常启动。*
 
-## 声明
-由于体积限制，本项目代码库**不包含**任何具体的空间数据文件（如 3D Tiles 模型、地形切片、RVT 文件、GeoJSON 样本等）。您需要将对应的数据自行存放至 `public/` 目录下才能预览对应功能。
+4. **构建生产版本:**
+   ```bash
+   npm run build
+   ```
+
+---
+
+## 📂 数据与存储声明
+为了保证代码库的轻量级和拉取速度，**本项目不包含任何大型空间数据**。
+凡是体积较大的文件（如 `3dtiels_whu` 文件夹、`dixing` 文件夹、`.rvt` BIM 模型、`.shp` 矢量源文件以及 `.tif` 栅格影像）均已被 `.gitignore` 规则屏蔽。
+
+**如需在本地完整体验相关功能：**
+1. 请自行准备好相应的空间数据与三维模型。
+2. 将数据放置于项目的 `public/` 目录下（例如：`public/3dtiels_whu/tileset.json`）。
+3. 前端应用会在对应功能被勾选时，自动向相对路径发起请求并完成渲染。

@@ -1,0 +1,509 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.map {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.hidden-map {
+  display: none;
+}
+
+.search-bar {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  width: 100%;
+  max-width: 600px;
+  padding: 0 20px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 50px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  padding: 8px 16px;
+  gap: 12px;
+}
+
+.search-box svg {
+  width: 20px;
+  height: 20px;
+  fill: #5f6368;
+  flex-shrink: 0;
+}
+
+.search-box input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  padding: 8px 0;
+  background: transparent;
+}
+
+.search-box button {
+  background: #4285f4;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.search-box button:hover {
+  background: #3367d6;
+}
+
+.layer-panel {
+  position: absolute;
+  top: 100px;
+  left: 20px;
+  z-index: 1000;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.layer-panel h3 {
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #202124;
+  border-bottom: 1px solid #e8eaed;
+  margin: 0;
+}
+
+.layer-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.layer-list li {
+  padding: 12px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #202124;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.layer-list li:hover {
+  background: #f1f3f4;
+}
+
+.layer-list li.active {
+  background: #e8f0fe;
+  color: #1a73e8;
+}
+
+.layer-list li .icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.layer-list li .icon.osm {
+  background: linear-gradient(135deg, #4CAF50, #2E7D32);
+}
+
+.layer-list li .icon.gaode {
+  background: linear-gradient(135deg, #2196F3, #1565C0);
+}
+
+.layer-list li .icon.baidu {
+  background: linear-gradient(135deg, #ff9800, #e65100);
+}
+
+.layer-list li .icon.tianditu {
+  background: linear-gradient(135deg, #9c27b0, #6a1b9a);
+}
+
+.layer-list li .icon.esri {
+  background: linear-gradient(135deg, #0078d4, #004578);
+}
+
+.local-data-panel,
+.geoserver-panel,
+.custom-panel {
+  position: absolute;
+  right: 20px;
+  z-index: 1000;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  width: 260px;
+}
+
+.local-data-panel {
+  top: 100px;
+}
+
+.geoserver-panel {
+  top: 220px;
+}
+
+.custom-panel {
+  top: 380px;
+}
+
+.local-data-panel h3,
+.geoserver-panel h3,
+.custom-panel h3 {
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #202124;
+  border-bottom: 1px solid #e8eaed;
+  margin: 0;
+}
+
+/* Tools Toolbar styling */
+.tools-toolbar {
+  position: absolute;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  background: white;
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  display: flex;
+  gap: 8px;
+}
+
+.tools-toolbar button {
+  background: #f1f3f4;
+  color: #202124;
+  border: 1px solid #e8eaed;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+
+.tools-toolbar button:hover {
+  background: #e8f0fe;
+  color: #1a73e8;
+  border-color: #1a73e8;
+}
+
+/* Mouse position */
+.custom-mouse-position {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.6);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  z-index: 1000;
+  font-family: monospace;
+}
+
+/* Tooltip styles */
+.ol-tooltip {
+  position: relative;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  color: white;
+  padding: 4px 8px;
+  opacity: 0.7;
+  white-space: nowrap;
+  font-size: 12px;
+}
+.ol-tooltip-measure {
+  opacity: 1;
+  font-weight: bold;
+}
+.ol-tooltip-static {
+  background-color: #ffcc33;
+  color: black;
+  border: 1px solid white;
+}
+
+/* Overview map override */
+.ol-custom-overviewmap {
+  bottom: 10px;
+  left: auto;
+  right: 10px;
+  top: auto;
+  position: absolute;
+}
+.ol-custom-overviewmap .ol-overviewmap-map {
+  width: 150px;
+  height: 150px;
+  border: 2px solid white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+/* Popup */
+.ol-popup {
+  position: absolute;
+  background-color: white;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #cccccc;
+  bottom: 12px;
+  left: -50px;
+  min-width: 200px;
+}
+.ol-popup:after, .ol-popup:before {
+  top: 100%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+.ol-popup:after {
+  border-top-color: white;
+  border-width: 10px;
+  left: 48px;
+  margin-left: -10px;
+}
+.ol-popup:before {
+  border-top-color: #cccccc;
+  border-width: 11px;
+  left: 48px;
+  margin-left: -11px;
+}
+.ol-popup-closer {
+  text-decoration: none;
+  position: absolute;
+  top: 2px;
+  right: 8px;
+}
+.ol-popup-closer:after {
+  content: "✖";
+}
+
+
+.data-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.data-list li {
+  padding: 12px 16px;
+  font-size: 14px;
+  color: #202124;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid #f1f3f4;
+}
+
+.data-list li:last-child {
+  border-bottom: none;
+}
+
+.data-list input[type="checkbox"] {
+  cursor: pointer;
+}
+
+.data-list label {
+  cursor: pointer;
+  user-select: none;
+}
+
+
+.search-bar .poi-results {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  margin-top: 8px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.search-bar .poi-results:empty {
+  display: none;
+}
+
+.search-bar .poi-results .result-item {
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+  border-bottom: 1px solid #e8eaed;
+}
+
+.search-bar .poi-results .result-item:hover {
+  background: #f8f9fa;
+}
+
+.search-bar .poi-results .result-item:last-child {
+  border-bottom: none;
+}
+
+.search-bar .poi-results .result-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #202124;
+  margin-bottom: 4px;
+}
+
+.search-bar .poi-results .result-address {
+  font-size: 12px;
+  color: #5f6368;
+}
+
+.ol-attribution {
+  position: absolute;
+  bottom: 10px;
+  right: 180px; /* shift attribution to not overlap with overview map */
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  color: #5f6368;
+}
+
+.ol-zoom {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.ol-zoom button {
+  display: block;
+  width: 36px;
+  height: 36px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: white;
+  color: #5f6368;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.ol-zoom button:first-child {
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid #e8eaed;
+}
+
+.ol-zoom button:last-child {
+  border-radius: 0 0 4px 4px;
+}
+
+.ol-zoom button:hover {
+  background: #f8f9fa;
+}
+
+.ol-rotate,
+.ol-attribution {
+  display: none;
+}
+
+.view-toggle {
+  position: absolute;
+  top: 20px;
+  right: 80px;
+  z-index: 1000;
+}
+
+.view-toggle button {
+  background: #1a73e8;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+.view-toggle button:hover {
+  background: #1557b0;
+}
+
+.hidden-panel {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .search-bar {
+    top: 10px;
+    padding: 0 10px;
+  }
+
+  .search-box {
+    padding: 6px 12px;
+  }
+
+  .search-box input {
+    font-size: 14px;
+  }
+
+  .search-box button {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .layer-panel {
+    top: 80px;
+    left: 10px;
+  }
+
+  .layer-panel h3 {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+
+  .layer-list li {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+
+  .poi-panel {
+    top: 80px;
+    right: 10px;
+    width: calc(100% - 20px);
+    max-width: 320px;
+  }
+}

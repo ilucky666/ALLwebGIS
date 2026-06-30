@@ -1,0 +1,12 @@
+1、搭建OpenLayer开发环境；
+2、仿照案例实现高德、百度地图、天地图（需要API密钥）的影像、矢量数据的访问；
+3、加载OpenStreetMap、Bing地图、Google（可选）
+4、实现上述3类地图的POI数据访问；
+5、将给定的Shape数据（小数据量SAHAPE），转成GeoJSon以及KML数据后，用Open Layer加载
+6、基于GeoServer对影像（50M以及50G）数据、（两个）SHAPE数据发布的WMTS、WMS、WFS服务，利用OpenLayer加载；
+7、基于OpenLayer在地图上绘制一个多段线，实现一个无人机飞机（图片）沿着该多段线飞行
+8、利用OpenLayer方法在地图上进行标注
+9、在地图上加载如下几个OpenLayer控件：鹰眼控件、鼠标位置控件、测量控件
+10、基于Python或Java语言（Java实现可以基于Tomcat），对给定的影像和SHAPE数据，利用AI辅助实现WMTS、WMS、WFS服务（任选一个即可），并利用OpenLayer访问该服务
+11、矢量瓦片+栅格瓦片形成和发布
+利用QGIS或Python代码，对给定的SHAPE数据（先试小数据量SHAPE）分别形成矢量瓦片和栅格瓦瓦片，并利用OpenLayer进行加载显示
